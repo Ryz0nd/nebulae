@@ -10,6 +10,7 @@
  */
 import path from 'node:path';
 import { spawn } from 'node:child_process';
+import { homedir } from 'node:os';
 import fs from 'node:fs/promises';
 import {
   app,
@@ -94,8 +95,9 @@ ipcMain.handle('initialize-node', async () => {
 });
 
 ipcMain.handle('remove-directory', async (_event, dirPath: string) => {
-  await fs.access(dirPath);
-  await fs.rm(dirPath, { recursive: true });
+  const homeDirPath = path.join(homedir(), dirPath);
+  await fs.access(homeDirPath);
+  await fs.rm(homeDirPath, { recursive: true });
 });
 
 ipcMain.handle(
