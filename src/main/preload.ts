@@ -29,19 +29,22 @@ const electronHandler = {
   },
 
   // OS
-  isMac: process.platform === 'darwin',
+  isIntelMac: process.platform === 'darwin' && process.arch === 'x64',
+  isAppleSiliconMac: process.platform === 'darwin' && process.arch === 'arm64',
   isWindows: process.platform === 'win32',
   isLinux: process.platform === 'linux',
 
   // Utils
-  async runCommand(
-    command: string
-  ): Promise<{ stdout: string; stderr: string }> {
-    return ipcRenderer.invoke('run-command', command);
+  async initializeNode(): Promise<{ stdout: string; stderr: string }> {
+    return ipcRenderer.invoke('initialize-node');
   },
 
   async showMessageBox(options: MessageBoxSyncOptions) {
     return ipcRenderer.invoke('show-message-box', options);
+  },
+
+  async removeDirectory(dirPath: string) {
+    return ipcRenderer.invoke('remove-directory', dirPath);
   },
 };
 

@@ -10,6 +10,7 @@
  */
 import path from 'node:path';
 import { spawn } from 'node:child_process';
+import fs from 'node:fs/promises';
 import {
   app,
   BrowserWindow,
@@ -32,12 +33,43 @@ class AppUpdater {
 }
 
 let mainWindow: BrowserWindow | null = null;
+const RESOURCES_PATH = app.isPackaged
+  ? path.join(process.resourcesPath, 'assets')
+  : path.join(__dirname, '../../assets');
 
-ipcMain.handle('run-command', async (_event, command: string) => {
+const siliconMacBinary = './celestia-darwin-arm64';
+const intelMacBinary = './celestia-darwin-x86_64';
+const windowsBinary = 'celestia-windows-x86_64';
+const linuxBinary = 'celestia-linux-x86_64';
+
+const getCurrentBinary = () => {
+  if (process.platform === 'win32') {
+    return windowsBinary;
+  }
+  if (process.platform === 'darwin' && process.arch === 'arm64') {
+    return siliconMacBinary;
+  }
+  if (process.platform === 'darwin' && process.arch === 'x64') {
+    return intelMacBinary;
+  }
+  if (process.platform === 'linux') {
+    return linuxBinary;
+  }
+
+  throw new Error('Unsupported platform');
+};
+
+ipcMain.handle('initialize-node', async () => {
   return new Promise<{ stdout: string; stderr: string }>((resolve, reject) => {
-    const task = spawn('bash', ['-c', command]);
     let stdout = '';
     let stderr = '';
+
+    const command = `${getCurrentBinary()} light init --p2p.network arabica`;
+    const targetDirectory = path.join(RESOURCES_PATH, 'binary');
+
+    const task = spawn('bash', ['-c', command], {
+      cwd: targetDirectory,
+    });
 
     task.stdout.on('data', (data: string) => {
       stdout += data.toString();
@@ -56,6 +88,11 @@ ipcMain.handle('run-command', async (_event, command: string) => {
       }
     });
   });
+});
+
+ipcMain.handle('remove-directory', async (_event, dirPath: string) => {
+  await fs.access(dirPath);
+  await fs.rm(dirPath, { recursive: true });
 });
 
 ipcMain.handle(
@@ -94,10 +131,6 @@ const createWindow = async () => {
   if (isDebug) {
     await installExtensions();
   }
-
-  const RESOURCES_PATH = app.isPackaged
-    ? path.join(process.resourcesPath, 'assets')
-    : path.join(__dirname, '../../assets');
 
   const getAssetPath = (...paths: string[]): string => {
     return path.join(RESOURCES_PATH, ...paths);

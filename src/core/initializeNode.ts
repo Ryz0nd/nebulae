@@ -23,14 +23,12 @@ function extractAddress(output: string): string | null {
 function checkAlreadyInitialized(output: string): boolean {
   const keyword = 'Detected plaintext keyring backend.';
   const keyGeneratedKeyword = 'NEW KEY GENERATED...';
-  return keyword.includes(keyword) && !output.includes(keyGeneratedKeyword);
+  return output.includes(keyword) && !output.includes(keyGeneratedKeyword);
 }
 
 async function initializeNode() {
-  const command = `celestia light init --p2p.network arabica`;
-
   try {
-    const { stdout, stderr } = await window.electron.runCommand(command);
+    const { stdout, stderr } = await window.electron.initializeNode();
 
     const mnemonic = extractMnemonic(stdout);
     const address = extractAddress(stdout);
