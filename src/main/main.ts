@@ -64,12 +64,15 @@ ipcMain.handle('initialize-node', async () => {
     let stdout = '';
     let stderr = '';
 
-    const command = `${getCurrentBinary()} light init --p2p.network arabica`;
     const targetDirectory = path.join(RESOURCES_PATH, 'binary');
 
-    const task = spawn('bash', ['-c', command], {
-      cwd: targetDirectory,
-    });
+    const task = spawn(
+      getCurrentBinary(),
+      ['light', 'init', '--p2p.network', 'arabica'],
+      {
+        cwd: targetDirectory,
+      }
+    );
 
     task.stdout.on('data', (data: string) => {
       stdout += data.toString();
