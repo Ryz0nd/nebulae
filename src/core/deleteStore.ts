@@ -1,8 +1,6 @@
 async function deleteDataStore() {
   const dataPath = '/.celestia-light-arabica-10/data';
 
-  console.log(`👀 Attempting to delete data store at: ${dataPath}`);
-
   try {
     await window.electron.removeDirectory(dataPath);
     window.electron.showMessageBox({
@@ -24,8 +22,6 @@ async function deleteDataStore() {
 async function deleteKeyStore() {
   const keyPath = '/.celestia-light-arabica-10/keys';
 
-  console.log(`👀 Attempting to delete key store at: ${keyPath}`);
-
   try {
     await window.electron.removeDirectory(keyPath);
     window.electron.showMessageBox({
@@ -46,8 +42,6 @@ async function deleteKeyStore() {
 
 async function deleteNodeStore() {
   const nodePath = '/.celestia-light-arabica-10';
-
-  console.log(`👀 Attempting to delete node store at: ${nodePath}`);
 
   try {
     await window.electron.removeDirectory(nodePath);

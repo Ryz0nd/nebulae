@@ -46,6 +46,18 @@ const electronHandler = {
   async removeDirectory(dirPath: string) {
     return ipcRenderer.invoke('remove-directory', dirPath);
   },
+
+  async startNode() {
+    return ipcRenderer.invoke('start-node');
+  },
+
+  async stopNode(): Promise<'Success' | 'Failed'> {
+    return ipcRenderer.invoke('stop-node');
+  },
+
+  async getNodeOutput(): Promise<string> {
+    return ipcRenderer.invoke('get-node-output');
+  },
 };
 
 contextBridge.exposeInMainWorld('electron', electronHandler);

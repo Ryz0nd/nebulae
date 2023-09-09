@@ -9,7 +9,7 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'node:path';
-import { spawn } from 'node:child_process';
+import { ChildProcessWithoutNullStreams, spawn } from 'node:child_process';
 import { homedir } from 'node:os';
 import fs from 'node:fs/promises';
 import {
@@ -92,6 +92,56 @@ ipcMain.handle('initialize-node', async () => {
       }
     });
   });
+});
+
+let nodeTask: ChildProcessWithoutNullStreams | null = null;
+let nodeOutput = '';
+
+ipcMain.handle('start-node', async () => {
+  const targetDirectory = path.join(RESOURCES_PATH, 'binary');
+  nodeTask = spawn(
+    getCurrentBinary(),
+    [
+      'light',
+      'start',
+      '--core.ip',
+      'consensus-validator.celestia-arabica-10.com',
+      '--p2p.network',
+      'arabica',
+    ],
+    {
+      cwd: targetDirectory,
+    }
+  );
+
+  nodeTask.stdout.on('data', (data: string) => {
+    nodeOutput += data.toString();
+  });
+
+  nodeTask.stderr.on('data', (data: string) => {
+    nodeOutput += data.toString();
+  });
+});
+
+ipcMain.handle('stop-node', async () => {
+  try {
+    if (nodeTask) {
+      nodeTask.kill();
+      nodeTask = null;
+      nodeOutput = '';
+      return 'Success';
+    }
+    return 'Failed';
+  } catch {
+    return 'Failed';
+  }
+});
+
+ipcMain.handle('get-node-output', async () => {
+  if (nodeOutput.length > 100_000) {
+    nodeOutput = nodeOutput.slice(nodeOutput.length - 100_000);
+  }
+  return nodeOutput;
 });
 
 ipcMain.handle('remove-directory', async (_event, dirPath: string) => {

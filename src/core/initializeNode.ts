@@ -63,4 +63,4 @@ async function initializeNode() {
   }
 }
 
-export { initializeNode };
+export default initializeNode;
