@@ -25,7 +25,7 @@ export default function Main() {
     (async () => {
       const currentNodeOutput = await window.electron.getNodeOutput();
       setNodeOutput(currentNodeOutput);
-      // scrollToBottom();
+      scrollToBottom();
     })();
   }, 1_000);
 

@@ -57,14 +57,14 @@ export default class MenuBuilder {
       label: 'Electron',
       submenu: [
         {
-          label: 'About Nebular',
+          label: 'About Nebulae',
           selector: 'orderFrontStandardAboutPanel:',
         },
         { type: 'separator' },
         { label: 'Services', submenu: [] },
         { type: 'separator' },
         {
-          label: 'Hide Nebular',
+          label: 'Hide Nebulae',
           accelerator: 'Command+H',
           selector: 'hide:',
         },

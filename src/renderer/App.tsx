@@ -1,5 +1,4 @@
 import './App.css';
-import { useState } from 'react';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import { twMerge } from 'tailwind-merge';
 import useNodeState from 'hooks/useNodeState';
@@ -35,7 +34,7 @@ export default function App() {
               type="button"
               id="nodrag"
               onClick={stopNode}
-              className="absolute bg-[#df5757] top-[50%] translate-y-[-50%] right-4 rounded px-3 pt-[2px] pb-[1px]"
+              className="absolute bg-[#df5757] top-[50%] translate-y-[-50%] right-4 rounded px-3 pb-[1px]"
             >
               <span className="text-sm font-normal text-gray-100">
                 Stop node
