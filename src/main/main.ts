@@ -268,7 +268,7 @@ const createWindow = async () => {
     width: 1280,
     height: 960,
     minWidth: 1024,
-    minHeight: 900,
+    minHeight: 950,
     ...(customTitleBar as any),
     trafficLightPosition: { x: 15, y: 14 },
     icon: getAssetPath('icon.png'),
