@@ -22,6 +22,7 @@ import {
 } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
+import { CelestiaSamplingStats } from 'types';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 
@@ -96,6 +97,7 @@ ipcMain.handle('initialize-node', async () => {
 
 let nodeTask: ChildProcessWithoutNullStreams | null = null;
 let nodeOutput = '';
+let isNodeRunning = false;
 
 ipcMain.handle('start-node', async () => {
   const targetDirectory = path.join(RESOURCES_PATH, 'binary');
@@ -113,6 +115,7 @@ ipcMain.handle('start-node', async () => {
       cwd: targetDirectory,
     }
   );
+  isNodeRunning = true;
 
   nodeTask.stdout.on('data', (data: string) => {
     nodeOutput += data.toString();
@@ -129,6 +132,7 @@ ipcMain.handle('stop-node', async () => {
       nodeTask.kill();
       nodeTask = null;
       nodeOutput = '';
+      isNodeRunning = false;
       return 'Success';
     }
     return 'Failed';
@@ -142,6 +146,70 @@ ipcMain.handle('get-node-output', async () => {
     nodeOutput = nodeOutput.slice(nodeOutput.length - 100_000);
   }
   return nodeOutput;
+});
+
+ipcMain.handle('is-node-running', async () => {
+  return isNodeRunning;
+});
+
+ipcMain.handle('get-sampling-stats', async () => {
+  const targetDirectory = path.join(RESOURCES_PATH, 'binary');
+
+  const getAuth = async (): Promise<string | null> => {
+    return new Promise((resolve) => {
+      let authStdout = '';
+
+      const authTask = spawn(
+        getCurrentBinary(),
+        ['light', 'auth', 'admin', '--p2p.network', 'arabica'],
+        {
+          cwd: targetDirectory,
+        }
+      );
+
+      authTask.stdout.on('data', (data: Buffer) => {
+        authStdout = data.toString();
+      });
+
+      authTask.on('close', (code: number) => {
+        if (code === 0) {
+          resolve(authStdout);
+        } else {
+          resolve(null);
+        }
+      });
+    });
+  };
+
+  const auth = await getAuth();
+
+  return new Promise<CelestiaSamplingStats | null>((resolve) => {
+    if (auth === null) {
+      resolve(null);
+      return;
+    }
+    let stdout = '';
+    const task = spawn(
+      getCurrentBinary(),
+      ['rpc', 'das', 'SamplingStats', '--auth', auth],
+      {
+        cwd: targetDirectory,
+      }
+    );
+
+    task.stdout.on('data', (data: Buffer) => {
+      stdout += data.toString();
+    });
+
+    task.on('close', (code: number) => {
+      if (code === 0) {
+        const stats = JSON.parse(stdout);
+        resolve(stats);
+      } else {
+        resolve(null);
+      }
+    });
+  });
 });
 
 ipcMain.handle('remove-directory', async (_event, dirPath: string) => {
@@ -193,8 +261,12 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
-    height: 728,
+    width: 1280,
+    height: 960,
+    minWidth: 1024,
+    minHeight: 900,
+    titleBarStyle: 'hidden',
+    trafficLightPosition: { x: 15, y: 14 },
     icon: getAssetPath('icon.png'),
     webPreferences: {
       preload: app.isPackaged

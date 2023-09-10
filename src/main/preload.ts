@@ -6,6 +6,7 @@ import {
   IpcRendererEvent,
   MessageBoxSyncOptions,
 } from 'electron';
+import { CelestiaSamplingStats } from 'types';
 
 export type Channels = 'ipc-example';
 
@@ -43,12 +44,20 @@ const electronHandler = {
     return ipcRenderer.invoke('show-message-box', options);
   },
 
+  async getSamplingStats(): Promise<CelestiaSamplingStats | null> {
+    return ipcRenderer.invoke('get-sampling-stats');
+  },
+
   async removeDirectory(dirPath: string) {
     return ipcRenderer.invoke('remove-directory', dirPath);
   },
 
   async startNode() {
     return ipcRenderer.invoke('start-node');
+  },
+
+  async isNodeRunning(): Promise<boolean> {
+    return ipcRenderer.invoke('is-node-running');
   },
 
   async stopNode(): Promise<'Success' | 'Failed'> {
