@@ -259,13 +259,17 @@ const createWindow = async () => {
     return path.join(RESOURCES_PATH, ...paths);
   };
 
+  const customTitleBar =
+    process.platform === 'win32'
+      ? { titleBarStyle: 'default', transparent: true }
+      : { titleBarStyle: 'hidden', transparent: false };
   mainWindow = new BrowserWindow({
     show: false,
     width: 1280,
     height: 960,
     minWidth: 1024,
     minHeight: 900,
-    titleBarStyle: 'hidden',
+    ...(customTitleBar as any),
     trafficLightPosition: { x: 15, y: 14 },
     icon: getAssetPath('icon.png'),
     webPreferences: {
@@ -292,6 +296,7 @@ const createWindow = async () => {
     mainWindow = null;
   });
 
+  mainWindow.menuBarVisible = false;
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
 
