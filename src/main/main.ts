@@ -61,15 +61,40 @@ const getCurrentBinary = () => {
   throw new Error('Unsupported platform');
 };
 
+const chmodTask = async () => {
+  if (process.platform !== 'linux') {
+    return Promise.resolve(null);
+  }
+
+  const targetDirectory = path.join(RESOURCES_PATH, 'binary');
+  return new Promise((resolve, reject) => {
+    const task = spawn('chmod', ['+x', getCurrentBinary()], {
+      cwd: targetDirectory,
+    });
+
+    task.on('close', (code: number) => {
+      if (code === 0) {
+        resolve(null);
+      } else {
+        const error = new Error(`Command execution failed with code ${code}`);
+        reject(error);
+      }
+    });
+  });
+};
+
 ipcMain.handle('initialize-node', async () => {
+  await chmodTask();
+
   return new Promise<{ stdout: string; stderr: string }>((resolve, reject) => {
     let stdout = '';
     let stderr = '';
 
     const targetDirectory = path.join(RESOURCES_PATH, 'binary');
+    const binaryPath = getCurrentBinary();
 
     const task = spawn(
-      getCurrentBinary(),
+      binaryPath,
       ['light', 'init', '--p2p.network', 'arabica'],
       {
         cwd: targetDirectory,
@@ -100,9 +125,11 @@ let nodeOutput = '';
 let isNodeRunning = false;
 
 ipcMain.handle('start-node', async () => {
+  await chmodTask();
   const targetDirectory = path.join(RESOURCES_PATH, 'binary');
+  const binaryPath = getCurrentBinary();
   nodeTask = spawn(
-    getCurrentBinary(),
+    binaryPath,
     [
       'light',
       'start',
@@ -153,14 +180,17 @@ ipcMain.handle('is-node-running', async () => {
 });
 
 ipcMain.handle('get-sampling-stats', async () => {
+  await chmodTask();
+
   const targetDirectory = path.join(RESOURCES_PATH, 'binary');
+  const binaryPath = getCurrentBinary();
 
   const getAuth = async (): Promise<string | null> => {
     return new Promise((resolve) => {
       let authStdout = '';
 
       const authTask = spawn(
-        getCurrentBinary(),
+        binaryPath,
         ['light', 'auth', 'admin', '--p2p.network', 'arabica'],
         {
           cwd: targetDirectory,
@@ -190,7 +220,7 @@ ipcMain.handle('get-sampling-stats', async () => {
     }
     let stdout = '';
     const task = spawn(
-      getCurrentBinary(),
+      binaryPath,
       ['rpc', 'das', 'SamplingStats', '--auth', auth],
       {
         cwd: targetDirectory,
