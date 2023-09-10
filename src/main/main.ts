@@ -42,7 +42,7 @@ const RESOURCES_PATH = app.isPackaged
 const siliconMacBinary = './celestia-darwin-arm64';
 const intelMacBinary = './celestia-darwin-x86_64';
 const windowsBinary = 'celestia-windows-x86_64';
-const linuxBinary = 'celestia-linux-x86_64';
+const linuxBinary = './celestia-linux-x86_64';
 
 const getCurrentBinary = () => {
   if (process.platform === 'win32') {
