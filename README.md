@@ -1,5 +1,4 @@
-# Nebulae, a Celestia light node Windows/Mac/Linux(not yet tested) app
-
+# Nebulae ⚛️ a Celestia light node multi-platform app
 
 Nebulae is a [Celestia light node](https://docs.celestia.org/nodes/light-node/) for Windows/Mac using Electron.js. 
 
@@ -8,7 +7,7 @@ v0.0.1 of this app runs on the [Arabica devnet](https://docs.celestia.org/nodes/
 ## Features ⚙️
 
 
-* `Initialize light node`: this initializes a Celestia light node in the application's local storage
+* `Initialize light node`: this initializes a Celestia light node
 * `Start light node`: this starts the light node
 * `Stop light node`: this stops the light node
 
@@ -29,7 +28,7 @@ You can download the app from the following link: https://github.com/Ryz0nd/nebu
 
 - For Intel Mac Users: Download "Nebulae-0.0.1.dmg"
 
-- For M1/M2 Mac Users: Download "Nebulae-0.0.1-arm64.dmg"
+- For M1/M2 Mac Users: Download "Nebulae-0.0.1.dmg"
 
 - For Linux Users: Download "Nebulae-0.0.1-arm64.AppImage"
 
