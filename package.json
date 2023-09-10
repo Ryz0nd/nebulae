@@ -205,7 +205,7 @@
     "publish": {
       "provider": "github",
       "owner": "devmosis",
-      "repo": "nebular"
+      "repo": "nebulae"
     }
   },
   "collective": {
