@@ -23,6 +23,16 @@ v0.0.1 of this app runs on the [Arabica devnet](https://docs.celestia.org/nodes/
 
 ## Installation 🏗️
 
+You can download the app from the following link: https://github.com/Ryz0nd/nebulae/releases/tag/v0.0.1
+
+- For Windows Users: Please download "Nebulae Setup 0.0.1.exe"
+
+- For Intel Mac Users: Download "Nebulae-0.0.1.dmg"
+
+- For M1/M2 Mac Users: Download "Nebulae-0.0.1-arm64.dmg"
+
+- For Linux Users: Download "Nebulae-0.0.1-arm64.AppImage"
+
 ### Supported Environments
 
 - Apple Silicon Mac (M1 / M2)
