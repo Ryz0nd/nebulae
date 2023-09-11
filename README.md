@@ -28,7 +28,7 @@ You can download the app from the following link: https://github.com/Ryz0nd/nebu
 
 - For Intel Mac Users: Download "Nebulae-0.0.1.dmg"
 
-- For M1/M2 Mac Users: Download "Nebulae-0.0.1.dmg"
+- For M1/M2 Mac Users: Download "Nebulae-0.0.1-arm64.dmg"
 
 - For Linux Users: Download "Nebulae-0.0.1-arm64.AppImage"
 
