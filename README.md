@@ -39,7 +39,7 @@ You can download the app from the following link: https://github.com/Ryz0nd/nebu
 
 
 - Intel Mac (Not Yet Tested)
-- Linux (Not Yet Tested)
+- Linux (Under development)
 
 
 ## About Celestia Binary (macOS, Windows, Linux):
