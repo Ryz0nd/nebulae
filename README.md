@@ -52,24 +52,29 @@ Here's forked Celestia-node https://github.com/Ryz0nd/celestia-node/releases/tag
 ### Before starting a node 🎬
 
 Mac
-<img width="1280" alt="스크린샷 2023-09-10 오후 5 51 56" src="https://github.com/Ryz0nd/nebulae/assets/53689198/8881e10c-d82c-4d3b-bf7c-36547aca9265">
+
+<img width="1276" alt="스크린샷 2023-09-11 오후 2 03 27" src="https://github.com/Ryz0nd/nebulae/assets/53689198/2dff4070-c68c-460b-9086-dbaff925243b">
 
 Windows
-![화면 캡처 2023-09-10 174926](https://github.com/Ryz0nd/nebulae/assets/53689198/e8a060a5-5d7d-4792-a373-5d838dfc508b)
+![화면 캡처 2023-09-10 174926](https://github.com/Ryz0nd/nebulae/assets/53689198/c90ef7c2-6216-4e14-be08-0a7ec02d4fc7)
+
 
 
 ### Initializing a node
 Mac
-<img width="1279" alt="스크린샷 2023-09-10 오후 5 52 35" src="https://github.com/Ryz0nd/nebulae/assets/53689198/9d91fb30-3596-4826-9103-da9424111385">
+
+<img width="1277" alt="스크린샷 2023-09-11 오후 2 03 45" src="https://github.com/Ryz0nd/nebulae/assets/53689198/c14b48a3-ff72-4646-bbcf-4fb59de43a42">
 
 Windows
-![화면 캡처 2023-09-10 175827](https://github.com/Ryz0nd/nebulae/assets/53689198/d3c4907b-ae8a-46fa-afc5-fccdf0050292)
+
+![화면 캡처 2023-09-10 175827](https://github.com/Ryz0nd/nebulae/assets/53689198/467e4ef3-2095-4667-aa63-eb5e9450d6ab)
 
 
 ### Running a node
 Mac
-<img width="1280" alt="스크린샷 2023-09-10 오후 5 53 01" src="https://github.com/Ryz0nd/nebulae/assets/53689198/a36515c9-fb94-41ac-9758-db808b6859ec">
+<img width="1281" alt="스크린샷 2023-09-10 오후 5 23 28" src="https://github.com/Ryz0nd/nebulae/assets/53689198/61a4816c-30f4-495e-bb7d-99899d5fbc72">
+
 
 Windows
-![a](https://github.com/Ryz0nd/nebulae/assets/53689198/3c728a4a-139c-447d-9add-3a35ab6897cc)
 
+![a](https://github.com/Ryz0nd/nebulae/assets/53689198/b6b98a31-a62e-4136-a66b-7ec9fb214895)
